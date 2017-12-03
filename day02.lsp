@@ -22,4 +22,17 @@
 (setq sum 0)
 (dolist (row spreadsheet)
   (setq sum (+ sum (- (reduce #'max row) (reduce #'min row)))))
+(print '(~~~ Part 1))
+(print sum)
+
+(setq sum 0)
+(dolist (row spreadsheet)
+  (setq len (- (length row) 1))
+  (loop for i from 0 to len do
+	(loop for j from 0 to len do
+	      (setq div (/ (nth i row) (nth j row)))
+	      (if (and (/= i j) (/= div 1) (= (mod div 1) 0))
+		  (setq sum (+ sum div))))))
+
+(print '(~~~ Part 2))
 (print sum)
