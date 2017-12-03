@@ -1,4 +1,6 @@
+#
 #  Part 1: Find the Manhattan Distance between n and 1 on the numberspiral
+#
 #  17  16  15  14  13
 #  18   5   4   3  12
 #  19   6   1   2  11
@@ -35,4 +37,51 @@ assert(ManhattanDistance(12) == 3)
 assert(ManhattanDistance(23) == 2)
 assert(ManhattanDistance(1024) == 31)
 
-print(ManhattanDistance(277678))
+myInput = 277678
+print("Part 1: {}".format(ManhattanDistance(myInput)))
+
+#
+# Part 2: The numberspiral is now build by building the sum of adajacent numbers
+#         starting with only 1 in the middle.
+#         What is the first value written larger than myInput?
+#
+#  147  142  133  122   59
+#  304    5    4    2   57
+#  330   10    1    1   54
+#  351   11   23   25   26
+#  362  747  806 --->   ...
+
+def getNeighbourCoords(point):
+    x, y = point
+    d = [-1, 0, 1]
+    res = []
+    for dx in d:
+        for dy in d:
+            if dx == 0 and dy == 0: continue
+            res.append((x+dx, y+dy))
+    return res
+
+def turnLeft(direction):
+    return (-direction[1], direction[0])
+
+def move(pos, dir):
+    return (pos[0] + dir[0], pos[1] + dir[1])
+
+matrix = {(0,0): 1,
+          (1,0): 1,
+          (1,1): 2}
+
+position = (1,1)
+direction = (-1,0)
+value = 0
+while value < myInput:
+    position = move(position, direction)
+    value = 0
+    for neighbourCoord in getNeighbourCoords(position):
+        value += matrix.get(neighbourCoord, 0)
+    matrix[position] = value
+    newDir = turnLeft(direction)
+    if matrix.get(move(position, newDir), None) is None:
+        direction = newDir
+
+print("Part 2: {}".format(value))
