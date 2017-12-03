@@ -25,14 +25,14 @@ def distToQuadrantMiddle(n, layer):
         lastNumInQuad -= quadSize
     return abs(quadSize // 2 + lastNumInQuad - n)
 
-def ManhattenDistance(n):
+def ManhattanDistance(n):
     if n == 1: return 0
     layer = layerIndex(n)
     return layer + distToQuadrantMiddle(n, layer) - 1
 
-assert(ManhattenDistance(1) == 0)
-assert(ManhattenDistance(12) == 3)
-assert(ManhattenDistance(23) == 2)
-assert(ManhattenDistance(1024) == 31)
+assert(ManhattanDistance(1) == 0)
+assert(ManhattanDistance(12) == 3)
+assert(ManhattanDistance(23) == 2)
+assert(ManhattanDistance(1024) == 31)
 
-print(ManhattenDistance(277678))
+print(ManhattanDistance(277678))
